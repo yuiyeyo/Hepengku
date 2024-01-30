@@ -29,6 +29,10 @@ def home():
 def join():
     return render_template('signup.html')
 
+@app.route('/budget')
+def budget():
+    return render_template('budget.html')
+
 @app.route('/dashboard')
 @login_required
 def dashboard():
@@ -46,6 +50,11 @@ def signout_routes():
 def signin_routes():
     return signin()
 
+@app.route ('/user/budgeting', methods = ['POST'])
+@login_required
+def budgeting_routes():
+    return budgeting()
+
 if __name__ == '__main__':
-    from user.routes import signup, signout, signin
+    from user.routes import signup, signout, signin, budgeting
     app.run(debug=True)
