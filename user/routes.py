@@ -13,3 +13,7 @@ def signout():
 @app.route ('/user/signin', methods = ['POST'])
 def signin():
     return User().signin()
+
+@app.route ('/user/budgeting', methods = ['POST'])
+def budgeting():
+    return User().budgeting()
