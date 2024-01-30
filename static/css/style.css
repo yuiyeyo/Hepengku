@@ -40,7 +40,7 @@ body
      margin-top: 10vh;
      margin-bottom: 10vh;
 }
-.signup
+.signup, .budgeting
 {
     background: #FFF7EB;
     height: 80vh;
@@ -57,7 +57,7 @@ body
      
 }
 
-.signuppage
+.signuppage, .budgetpage
 {
     
     margin: auto;
@@ -86,4 +86,10 @@ input, select, textarea {
 
 .singin_form input, select, textarea {
     padding: 20%;
+}
+
+.budget_form label
+{
+    margin-right: 5vw;
+    font-weight:700;
 }
