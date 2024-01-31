@@ -3,11 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Hepengku - Dashboard</title>
 </head>
 <body>
-    <p>Hi,  {{session['user']['name']}}</p>
-    <a href="/user/signout" class="btn">signout</a>
+    <div class="dashboardmenu">
+        <a href="/user/signout" class="btn">signout</a>
+    </div>
+    <div class="dashboardpage">
+        <span class="dashboard_left">
+            <div class="remainings">
+                <h3>Hi, {{ user['name'] }}</h3>
+                <p>Your remaining budget:</p>
+                <h1> 
+                    Rp
+                    {% if budget %}
+                        {% set budgetamt = budget.get('bills', 0) | int + budget.get('transport', 0) | int + budget.get('food', 0) | int + budget.get('shop', 0) | int + budget.get('others', 0) | int %}
+                        {{ budgetamt }}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </h1>
+                
+                <p>
+                    {% if budgetamt > 0 %}
+                        You’re still under your budget! Keep it up!
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </p>
+                
+               
+            </div>
+            <div class="incomeoutcome">
+                <span class="income">
+                    <a>add income</a>
+                </span>
+                <span class="outcome">
+                    <a>add outcome</a>
+                </span>
+            </div>
+        
+            </span>
+            <span class="transactions">
+            
+            </span>
+    </div>
+    
     <script src="/static/js/jquery.js"></script>
     <script src="/static/js/script.js"></script>
 </body>
