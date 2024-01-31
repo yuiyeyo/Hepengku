@@ -175,3 +175,10 @@ input, select, textarea {
     justify-content: center;
     align-items: center;
 }
+
+.budgeting input, select, textarea {
+    
+    height: 5vh;
+}
+
+
