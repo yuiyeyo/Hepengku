@@ -36,7 +36,22 @@ def budget():
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    return render_template('dashboard.html')
+    if 'user' not in session:
+        return redirect('/')
+
+    user = db.users.find_one({"_id": session['user']['_id']})
+
+    if not user:
+        return jsonify({"error": "User not found in the database"}), 404
+
+    budget = db.budgeting.find_one({"users_id": session['user']['_id']})
+
+    return render_template('dashboard.html', user=user, budget=budget)
+
+@app.route('/addincome')
+@login_required
+def addincome():
+    return 'add income'
 
 @app.route('/user/signup', methods=['POST'])
 def signup_routes():
