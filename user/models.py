@@ -63,11 +63,11 @@ class User:
             return jsonify({"error": "User not found in the database"}), 404
 
         budget = {
-            "users_id": session['user']['_id'],
             "bills": request.form.get('bills'),
             "transport": request.form.get('transport'),
             "food": request.form.get('food'),
-            "shop": request.form.get('shop')
+            "shop": request.form.get('shop'),
+            "others": request.form.get('others')
         }
 
         if db.budgeting.insert_one(budget):
