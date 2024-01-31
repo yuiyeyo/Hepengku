@@ -24,6 +24,7 @@
                         {% set budgetamt = budget.get('bills', 0) | int + budget.get('transport', 0) | int + budget.get('food', 0) | int + budget.get('shop', 0) | int + budget.get('others', 0) | int %}
                         {{ budgetamt }}
                     {% else %}
+                    {% set budgetamt = 0 %}
                         N/A
                     {% endif %}
                 </h1>
