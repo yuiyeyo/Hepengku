@@ -75,3 +75,51 @@ class User:
          return self.start_session(user)
 
         return jsonify({"error": "You cannot join us now somehow, please try again later!"}), 400
+
+    def income(self) :
+       if 'user' not in session:
+            return jsonify({"error": "User not authenticated"}), 401
+       
+       print(request.form)
+       user = db.users.find_one({"_id": session['user']['_id']})
+       
+       if not user:
+            return jsonify({"error": "User not found in the database"}), 404
+       
+       transaction = {
+            "users_id": session['user']['_id'],
+            "amount": request.form.get('amount'),
+            "category": request.form.get('category'),
+            "date": request.form.get('date')
+        }
+       
+       if db.transactions.insert_one(transaction):
+         return self.start_session(user)
+       
+       return jsonify({"error": "You cannot add your transaction now somehow, please try again later!"}), 400 
+    
+    def outcome(self) :
+       if 'user' not in session:
+            return jsonify({"error": "User not authenticated"}), 401
+       
+       print(request.form)
+       user = db.users.find_one({"_id": session['user']['_id']})
+       
+       if not user:
+            return jsonify({"error": "User not found in the database"}), 404
+       
+       amount = float(request.form.get('amount'))
+       amount = -amount
+
+       
+       transaction = {
+            "users_id": session['user']['_id'],
+            "amount": amount,
+            "category": request.form.get('category'),
+            "date": request.form.get('date')
+        }
+       
+       if db.transactions.insert_one(transaction):
+         return self.start_session(user)
+       
+       return jsonify({"error": "You cannot add your transaction now somehow, please try again later!"}), 400 
