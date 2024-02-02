@@ -56,17 +56,14 @@ def dashboard():
 
     transactions_data = db.transactions.find({"users_id": session['user']['_id']}).sort("date", -1)
 
-    # Calculate the start date of the current month
     today = datetime.now()
     start_date = today.replace(day=1)
 
-    # Filter transactions for the current month
     transactions_data_current_month = db.transactions.find({
         "users_id": session['user']['_id'],
         "date": {"$gte": start_date.strftime('%Y-%m-%d')}
     }).sort("date", -1)
 
-    # Calculate the total amount of transactions for the current month
     total_amount_current_month = sum(int(transaction['amount']) for transaction in transactions_data_current_month)
 
     current_date = today.strftime('%Y-%m-%d')
