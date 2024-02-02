@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <title>Hepengku - Add Income</title>
+</head>
+<body>
+    <div class="incomepage">
+    <div class="incomecard">
+        <h1>How much money did you receive?</h1>
+    <form name="income_form" class="incomeform">
+
+        <label for="amount"></label>
+        <input type="number" name="amount" class="field" placeholder="0.0" required> <br>
+
+        <label for="date">When? </label>
+        <input type="date" name="date" class="field" required><br>
+    
+        <label>
+            <input type="radio" name="category" value="Income" required>
+            Income
+        </label>
+        
+        <br>
+        
+
+        <p class="error error--hidden"> </p>
+
+        <input type="submit" value="Let's Start!" class="btn">
+    </form>
+
+    
+    </div>
+</div>
+<script src="/static/js/jquery.js"></script>
+    <script src="/static/js/script.js"></script>
+</body>
+</html>
