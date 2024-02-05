@@ -76,10 +76,16 @@ def dashboard():
 def addincome():
     return render_template('addincome.html')
 
-@app.route('/addoutcome')
+@app.route('/addexpenses')
 @login_required
-def addoutcome():
-    return render_template('addoutcome.html')
+def addexpenses():
+    return render_template('addexpenses.html')
+
+
+@app.route ('/transactions')
+@login_required
+def transactions():
+    return render_template('transactions.html')
 
 @app.route('/user/signup', methods=['POST'])
 def signup_routes():
@@ -103,11 +109,12 @@ def budgeting_routes():
 def income_routes():
     return income()
 
-@app.route ('/user/outcome', methods = ['POST'])
+@app.route ('/user/expenses', methods = ['POST'])
 @login_required
-def outcome_routes():
-    return outcome()
+def expenses_routes():
+    return expenses()
+
 
 if __name__ == '__main__':
-    from user.routes import signup, signout, signin, budgeting, income, outcome
+    from user.routes import signup, signout, signin, budgeting, income, expenses
     app.run(debug=True)
