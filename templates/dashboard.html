@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Hepengku - Dashboard</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+</head>
+<body>
+    <div class="dashboardmenu">
+        <a href="/user/signout" class="btn">signout</a>
+    </div>
+    <div class="dashboardpage">
+        <span class="dashboard_left">
+            <div class="remainings">
+                <h3>Hi, {{ user['name'] }}</h3>
+                <p>Your remaining budget:</p>
+                <h1> 
+                    Rp
+
+                    {% if budget %}
+    {% set budgetamt = budget.get('bills', 0) | int + budget.get('transport', 0) | int + budget.get('food', 0) | int + budget.get('shop', 0) | int + budget.get('others', 0) | int %}
+    
+    {% set total_transactions_this_month = 0 %}
+    
+    
+    {% set total_transactions_this_month = total_amount_current_month | int + budgetamt %}
+
+    
+    {% set remaining_budget = budgetamt - total_transactions_this_month %}
+
+    {{ total_transactions_this_month }}
+{% else %}
+    {% set budgetamt = 0 %}
+    {{ budgetamt }}
+{% endif %}
+
+
+
+                </h1>
+                
+                <p>
+                    {% if budgetamt > 0 %}
+                        You’re still under your budget! Keep it up!
+                    {% else %}
+                        Youve been spending a bit too much lately
+                    {% endif %}
+                </p>
+                
+               
+            </div>
+            <div class="incomeexpenses">
+                <span class="income">
+                    <a href="/addincome">add income</a>
+                </span>
+                <span class="expenses">
+                    <a href="/addexpenses">add expenses</a>
+                </span>
+            </div>
+            <div class ="extras">
+
+            </div>
+        
+            </span>
+            <span class="transactions">
+                
+
+{% set transactions = transactions_data %}
+<h2 class="recenttranstitle">Recent Transactions</h2>
+<a href="/transactions">
+    <span class="material-symbols-outlined" style="position: absolute; top: 5%; left: 80%;">
+        expand_circle_right
+    </span>
+</a>
+
+<ul>
+    
+    {% if transactions %}
+    {% set counter = 0 %}
+    {% for transaction in transactions %}
+        {% if counter < 4 %}
+            <li>
+                <strong>Date:</strong> {{ transaction.date }}<br>
+                <strong>Amount:</strong> {{ transaction.amount }}<br>
+                <strong>Category:</strong> {{ transaction.category }}<br>
+            </li>
+            <br>
+            {% set counter = counter + 1 %}
+        {% endif %}
+    {% endfor %}
+{% else %}
+    <li>No Transactions</li>
+{% endif %}
+
+</ul>
+
+
+
+            </span>
+    </div>
+    
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/script.js"></script>
+</body>
+</html>
