@@ -1,6 +1,8 @@
-from flask import Flask, render_template, redirect, session
+from flask import Flask, render_template, redirect, session, request
 from functools import wraps
 from datetime import datetime
+from dateutil.relativedelta import relativedelta
+
 import pymongo
 
 app = Flask(__name__)
@@ -47,13 +49,6 @@ def dashboard():
 
     budget = db.budgeting.find_one({"users_id": session['user']['_id']})
 
-    user = db.users.find_one({"_id": session['user']['_id']})
-
-    if not user:
-        return jsonify({"error": "User not found in the database"}), 404
-
-    budget = db.budgeting.find_one({"users_id": session['user']['_id']})
-
     transactions_data = db.transactions.find({"users_id": session['user']['_id']}).sort("date", -1)
 
     today = datetime.now()
@@ -85,7 +80,26 @@ def addexpenses():
 @app.route ('/transactions')
 @login_required
 def transactions():
-    return render_template('transactions.html')
+    if 'user' not in session:
+        return redirect('/')
+
+    month_year_input = request.args.get('monthYearInput')
+    if not month_year_input:
+        return render_template('transactions.html')
+
+    # Convert the month and year input to a datetime object
+    selected_date = datetime.strptime(month_year_input, '%Y-%m')
+
+    # Get the start and end dates for the selected month
+    start_date = selected_date.replace(day=1)
+    end_date = start_date + relativedelta(months=1)
+
+    transactions_data = db.transactions.find({
+        "users_id": session['user']['_id'],
+        "date": {"$gte": start_date.strftime('%Y-%m-%d'), "$lt": end_date.strftime('%Y-%m-%d')}
+    }).sort("date", -1)
+
+    return render_template('transactions.html', transactions_data=transactions_data, month_year_input=month_year_input)
 
 @app.route('/user/signup', methods=['POST'])
 def signup_routes():
