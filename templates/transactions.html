@@ -14,18 +14,26 @@
     <div class="transactionspage">
     <div class="transactionscard">
         <h1>Your past Transactions</h1>
-        <form name="transactions_form">
+        <form action="/transactions" method="GET">
             <label for="monthYearInput">Select Month and Year:</label>
             <input type="month" id="monthYearInput" name="monthYearInput" required>
             <input type="submit" value="Submit">
         </form>
-        <ul>
-            {% if transactions %}
-                <li>Transactions</li>
-            {% else %}
-                <li>No Transactions</li>
-            {% endif %}
-        </ul>
+        
+        {% if transactions_data %}
+            <h2>Transactions for {{month_year_input}}</h2>
+            <ul>
+                {% for transaction in transactions_data %}
+                    <li>
+                        <strong>Date:</strong> {{ transaction.date }}<br>
+                        <strong>Amount:</strong> {{ transaction.amount }}<br>
+                        <strong>Category:</strong> {{ transaction.category }}<br>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No Transactions</p>
+        {% endif %}
 
     
     </div>
