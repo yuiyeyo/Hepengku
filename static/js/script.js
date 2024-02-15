@@ -17,7 +17,7 @@ $("form[name=signup_form]").submit(function(e) {
         }
     });
 
-    e.preventDefault(); // Corrected this line
+    e.preventDefault(); 
 });
 
 $("form[name=signin_form]").submit(function(e) {
@@ -97,7 +97,7 @@ $("form[name=income_form]").submit(function(e) {
         }
     });
 });
-$("form[name=expense_form]").submit(function(e) {
+$("form[name=expenses_form]").submit(function(e) {
     e.preventDefault();
 
     var $form = $(this);
